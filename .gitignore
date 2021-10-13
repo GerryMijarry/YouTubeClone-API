@@ -145,3 +145,4 @@ cython_debug/
 
 local_settings.py
 
+youtubeclone/local_settings.py
