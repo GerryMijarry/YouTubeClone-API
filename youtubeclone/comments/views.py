@@ -24,21 +24,21 @@ class CommentList(APIView):
 
 class CommentDetail(APIView):
 
-    def get_object(self, pk):
+    def get_object(self, videoid):
         try:
-            return Comment.objects.get(pk=pk)
+            return Comment.objects.get(videoid=videoid)
         except Comment.DoesNotExist:
             raise Http404
 
-    #get by id
-    def get(self, request, pk):
-        comment = self.get_object(pk)
+    #get by video id
+    def get(self, request, videoid):
+        comment = self.get_object(videoid)
         serializer = CommentSerializer(comment)
         return Response(serializer.data)
 
     #update
-    def put(self, request, pk):
-        comment = self.get_object(pk)
+    def put(self, request, videoid):
+        comment = self.get_object(videoid)
         serializer = CommentSerializer(comment, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -46,8 +46,8 @@ class CommentDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     #delete
-    def delete(self, request, pk):
-        comment = self.get_object(pk)
+    def delete(self, request, videoid):
+        comment = self.get_object(videoid)
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -68,21 +68,21 @@ class ReplyList(APIView):
 
 class ReplyDetail(APIView):
 
-    def get_object(self, pk):
+    def get_object(self, commentid):
         try:
-            return Reply.objects.get(pk=pk)
+            return Reply.objects.get(commentid=commentid)
         except Reply.DoesNotExist:
             raise Http404
 
     #get by id
-    def get(self, request, pk):
-        reply = self.get_object(pk)
+    def get(self, request, commentid):
+        reply = self.get_object(commentid)
         serializer = ReplySerializer(reply)
         return Response(serializer.data)
 
     #update
-    def put(self, request, pk):
-        reply = self.get_object(pk)
+    def put(self, request, commentid):
+        reply = self.get_object(commentid)
         serializer = ReplySerializer(reply, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -90,7 +90,7 @@ class ReplyDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     #delete
-    def delete(self, request, pk):
-        reply = self.get_object(pk)
+    def delete(self, request, commentid):
+        reply = self.get_object(commentid)
         reply.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
