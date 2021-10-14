@@ -26,14 +26,14 @@ class CommentDetail(APIView):
 
     def get_object(self, videoid):
         try:
-            return Comment.objects.get(videoid=videoid)
+            return Comment.objects.filter(videoid=videoid)
         except Comment.DoesNotExist:
             raise Http404
 
     #get by video id
     def get(self, request, videoid):
         comment = self.get_object(videoid)
-        serializer = CommentSerializer(comment)
+        serializer = CommentSerializer(comment, many=True)
         return Response(serializer.data)
 
     #update
