@@ -11,5 +11,4 @@ class Comment(models.Model):
 class Reply(models.Model):
     commentid = models.ForeignKey(Comment, on_delete=models.CASCADE)
     reply = models.TextField(max_length=300)
-    name = models.TextField(max_length=300)
     
