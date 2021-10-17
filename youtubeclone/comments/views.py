@@ -78,7 +78,7 @@ class ReplyDetail(APIView):
     #get by id
     def get(self, request, commentid):
         reply = self.get_object(commentid)
-        serializer = ReplySerializer(reply)
+        serializer = ReplySerializer(reply, many=True)
         return Response(serializer.data)
 
     #update
